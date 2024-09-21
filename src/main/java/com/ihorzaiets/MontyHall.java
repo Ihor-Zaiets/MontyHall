@@ -17,7 +17,7 @@ public class MontyHall {
 
     private static void runSimulationForMontyHall(int numberOfDoors) {
         System.out.printf("Running simulation for %s doors.\n", numberOfDoors);
-        int numberOfSimulations = 1000000;
+        int numberOfSimulations = 10000000;
         int numberOfWins = 0;
         for (int i = 0; i < numberOfSimulations; i++) {
             createDoors(numberOfDoors);

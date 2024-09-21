@@ -34,9 +34,9 @@ public class MontyHall {
         System.out.printf("Running %s Monty Hall simulations for %s doors.\n", formattedNumberOfSimulations, numberOfDoors);
         int numberOfWins = 0;
         for (int i = 0; i < NUMBER_OF_SIMULATIONS; i++) {
-            createDoors(numberOfDoors);
-            pickADoor();
-            revealWrongDoors();
+            winningDoor = pickRandomDoor(numberOfDoors);
+            playerDoorChoice = pickRandomDoor(numberOfDoors);
+            revealWrongDoors(numberOfDoors);
             offerChoiceSwitch();
             if (isPlayerWinning) numberOfWins++;
         }
@@ -44,24 +44,12 @@ public class MontyHall {
         System.out.printf("Player won in %s%% of simulations.\n", percentageOfWin);
     }
 
-    private static void createDoors(int numberOfDoors) {
-        for (int i = 1; i <= numberOfDoors; i++) {
-            doorPrizeMap.put(i, false);
-        }
-        winningDoor = pickRandomDoor();
-        doorPrizeMap.replace(winningDoor, true);
-    }
-
-    private static void pickADoor() {
-        playerDoorChoice = pickRandomDoor();
-    }
-
-    private static void revealWrongDoors() {
-        int secondDoor = pickRandomDoor();
+    private static void revealWrongDoors(int numberOfDoors) {
+        int secondDoor = pickRandomDoor(numberOfDoors);
         while (secondDoor == playerDoorChoice) {
-            secondDoor = pickRandomDoor();
+            secondDoor = pickRandomDoor(numberOfDoors);
         }
-        if (doorPrizeMap.get(playerDoorChoice)) {
+        if (winningDoor == playerDoorChoice) {
             doorPrizeMap = new HashMap<>();
             doorPrizeMap.put(playerDoorChoice, true);
             doorPrizeMap.put(secondDoor, false);
@@ -77,7 +65,7 @@ public class MontyHall {
         if (DO_PLAYER_SWITCH_CHOICE) isPlayerWinning = !isPlayerWinning;
     }
 
-    private static int pickRandomDoor() {
-        return (int) (Math.random() * doorPrizeMap.size()) + 1;
+    private static int pickRandomDoor(int numberOfDoors) {
+        return (int) (Math.random() * numberOfDoors) + 1;
     }
 }

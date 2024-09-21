@@ -4,6 +4,16 @@ import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Locale;
 
+/**
+ * Monty Hall problem or paradox.
+ * <p>
+ * The best explanation i found is this:
+ * <p>
+ * If you pick the winning door and switch you always lose, but if you pick a loosing door and switch you always win.
+ * Since Monty is forced to eliminate the other loosing doors from the game, but because you are more likely to pick a loosing
+ * door in the first place, this means you are more likely to be in situation where switching wins you the game.
+ * </p>
+ * */
 public class MontyHall {
 
     private static final boolean DO_PLAYER_SWITCH_CHOICE = true;

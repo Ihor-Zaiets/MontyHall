@@ -1,13 +1,12 @@
 package com.ihorzaiets;
 
 import java.text.NumberFormat;
-import java.util.HashMap;
 import java.util.Locale;
 
 /**
  * Monty Hall problem or paradox.
  * <p>
- * The best explanation i found is this:
+ * The best explanation I found is this:
  * <p>
  * If you pick the winning door and switch you always lose, but if you pick a loosing door and switch you always win.
  * Since Monty is forced to eliminate the other loosing doors from the game, but because you are more likely to pick a loosing
@@ -19,12 +18,12 @@ public class MontyHall {
     private static final boolean DO_PLAYER_SWITCH_CHOICE = true;
     private static final int NUMBER_OF_SIMULATIONS = 10000000;
 
-    private static HashMap<Integer, Boolean> doorPrizeMap = new HashMap<>();
     private static int playerDoorChoice;
     private static int winningDoor;
     private static boolean isPlayerWinning;
 
     public static void main(String[] args) {
+        System.out.println("Do player switch choice: " + DO_PLAYER_SWITCH_CHOICE + "\n");
         runMontyHallSimulation(3);
         runMontyHallSimulation(100);
     }
@@ -36,32 +35,15 @@ public class MontyHall {
         for (int i = 0; i < NUMBER_OF_SIMULATIONS; i++) {
             winningDoor = pickRandomDoor(numberOfDoors);
             playerDoorChoice = pickRandomDoor(numberOfDoors);
-            revealWrongDoors(numberOfDoors);
             offerChoiceSwitch();
             if (isPlayerWinning) numberOfWins++;
         }
         float percentageOfWin = (float) numberOfWins / (float) NUMBER_OF_SIMULATIONS * 100;
-        System.out.printf("Player won in %s%% of simulations.\n", percentageOfWin);
-    }
-
-    private static void revealWrongDoors(int numberOfDoors) {
-        int secondDoor = pickRandomDoor(numberOfDoors);
-        while (secondDoor == playerDoorChoice) {
-            secondDoor = pickRandomDoor(numberOfDoors);
-        }
-        if (winningDoor == playerDoorChoice) {
-            doorPrizeMap = new HashMap<>();
-            doorPrizeMap.put(playerDoorChoice, true);
-            doorPrizeMap.put(secondDoor, false);
-        } else {
-            doorPrizeMap = new HashMap<>();
-            doorPrizeMap.put(playerDoorChoice, false);
-            doorPrizeMap.put(winningDoor, true);
-        }
+        System.out.printf("Player won in %s%% of simulations.\n\n", percentageOfWin);
     }
 
     private static void offerChoiceSwitch() {
-        isPlayerWinning = doorPrizeMap.get(playerDoorChoice);
+        isPlayerWinning = playerDoorChoice == winningDoor;
         if (DO_PLAYER_SWITCH_CHOICE) isPlayerWinning = !isPlayerWinning;
     }
 
